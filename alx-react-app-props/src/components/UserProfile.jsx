@@ -1,8 +1,16 @@
-import UserInfo from "./UserInfo";
 import { useContext } from "react";
+import UserContext from "./UserContext"; // adjust the path if needed
 
-function ProfilePage() {
-  return <UserInfo />;
+function UserProfile() {
+  const userData = useContext(UserContext);
+
+  return (
+    <div>
+      <h2>User Profile</h2>
+      <p>Name: {userData.name}</p>
+      <p>Email: {userData.email}</p>
+    </div>
+  );
 }
 
-export default ProfilePage;
+export default UserProfile;
