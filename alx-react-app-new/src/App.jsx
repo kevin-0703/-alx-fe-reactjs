@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import MainContent from "./components/MainContent";
 import React from "react";
 import UserProfile from "./components/UserProfile";
-import counter from "./components/counter";
+import counter from "./components/Counter";
 function App() {
   return (
     <>
