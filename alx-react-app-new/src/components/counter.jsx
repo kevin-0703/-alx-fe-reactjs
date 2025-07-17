@@ -11,3 +11,5 @@ function counter() {
   );
 }
 export default counter;
+// This code defines a simple counter component in React.
+// It uses the useState hook to manage the count state.
