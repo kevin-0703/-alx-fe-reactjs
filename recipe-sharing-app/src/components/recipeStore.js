@@ -2,22 +2,48 @@ import { create } from 'zustand';
 
 const useRecipeStore = create((set, get) => ({
     recipes: [],
-    searchTerm: '',
-    filteredRecipes: [],
+    favorites: [],
+    recommendations: [],
 
-    addRecipe: (newRecipe) =>
-        set((state) => ({
-            recipes: [...state.recipes, newRecipe],
-            filteredRecipes: [...state.recipes, newRecipe].filter((r) =>
-                r.title.toLowerCase().includes(get().searchTerm.toLowerCase())
+    addRecipe: (newRecipe) => {
+        const state = get();
+        const updatedRecipes = [...state.recipes, newRecipe];
+        return set({
+            recipes: updatedRecipes,
+            filteredRecipes: updatedRecipes.filter((r) =>
+                r.title.toLowerCase().includes(state.searchTerm.toLowerCase())
             ),
+        });
+    },
+
+    // Favorites
+    addFavorite: (recipeId) =>
+        set((state) => ({
+            favorites: [...new Set([...state.favorites, recipeId])],
         })),
 
+    removeFavorite: (recipeId) =>
+        set((state) => ({
+            favorites: state.favorites.filter((id) => id !== recipeId),
+        })),
+
+    // Recommendations (mocked)
+    generateRecommendations: () => {
+        const { recipes, favorites } = get();
+        const recommended = recipes.filter(
+            (recipe) =>
+                favorites.includes(recipe.id) && Math.random() > 0.5 // mock randomness
+        );
+        set({ recommendations: recommended });
+    },
+
+    searchTerm: '',
     setSearchTerm: (term) => {
         set({ searchTerm: term });
         get().filterRecipes();
     },
 
+    filteredRecipes: [],
     filterRecipes: () =>
         set((state) => ({
             filteredRecipes: state.recipes.filter((recipe) =>
@@ -33,6 +59,7 @@ const useRecipeStore = create((set, get) => ({
                 filteredRecipes: updated.filter((r) =>
                     r.title.toLowerCase().includes(state.searchTerm.toLowerCase())
                 ),
+                favorites: state.favorites.filter((fid) => fid !== id),
             };
         }),
 
