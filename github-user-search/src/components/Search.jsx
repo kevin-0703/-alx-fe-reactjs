@@ -1,23 +1,39 @@
 import React, { useState } from "react";
-import { fetchUserData } from "../services/githubAPI";
+import { fetchUserData } from "../services/githubService";
 
 function Search() {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(false);
     setUserData(null);
+    setError("");
+    setLoading(false);
+
+    if (!username.trim()) {
+      setError("Please enter a GitHub username.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const data = await fetchUserData(username);
-      setUserData(data);
+
+      if (data && data.login) {
+        setUserData(data);
+      } else {
+        setError("Looks like we can't find the user.");
+      }
     } catch (err) {
-      setError(true);
+      if (err.response && err.response.status === 404) {
+        setError("Looks like we can't find the user.");
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
     } finally {
       setLoading(false);
     }
@@ -36,7 +52,7 @@ function Search() {
       </form>
 
       {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can't find the user</p>}
+      {error && <p>{error}</p>}
 
       {userData && (
         <div style={{ marginTop: "1rem" }}>
