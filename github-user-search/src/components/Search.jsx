@@ -26,7 +26,7 @@ function Search() {
       if (data && data.login) {
         setUserData(data);
       } else {
-        setError("Looks like we can't find the user.");
+        setError("Looks like we cant find the user.");
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
