@@ -49,7 +49,7 @@ function AddRecipeForm() {
       summary,
       image,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions: instructions.split(",").map((step) => step.trim()),
+      instructions: instructions.split(",").map((steps) => step.trim()),
     };
     console.log("New recipe:", newRecipe);
   };
