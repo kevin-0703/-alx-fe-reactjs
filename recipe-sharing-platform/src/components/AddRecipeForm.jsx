@@ -5,8 +5,9 @@ function AddRecipeForm() {
   const [image, setImage] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [instructions, setInstructions] = useState([]);
+  const [errors, setErrors] = useState({});
   const handleSubmit = (e) => {
-    e.preventdefault();
+    e.preventDefault();
     const newRecipe = {
       id,
       title,
