@@ -15,7 +15,7 @@ function HomePage() {
       <h1 className="text-3xl font-bold mb-6 text-center">
         Recipe sharing platform
       </h1>
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid-cols-1 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
         {recipe.map(({ id, title, summary, image }) => (
           <div
             key={id}
