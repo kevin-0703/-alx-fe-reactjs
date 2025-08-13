@@ -3,7 +3,7 @@ import { useState, useEffect, use } from "react";
 function HomePage() {
   const [recipe, setRecipe] = useState([]);
   useEffect(() => {
-    fetch("/data.json")
+    fetch("src/data.json")
       .then((response) => response.json())
       .then((jsonData) => {
         setRecipe(jsonData);
