@@ -13,7 +13,7 @@ function AddRecipeForm() {
       summary,
       image,
       ingredients: ingredients.split(",").map((item) => item.trim()),
-      instructions: instructions.split(",").map((item) => item.trim()),
+      instructions: instructions.split(",").map((step) => item.trim()),
     };
   };
   return (
