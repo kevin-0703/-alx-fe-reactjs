@@ -12,6 +12,7 @@ import Profile from "./components/Profile";
 import BlogPost from "./components/BlogPost";
 import ProfileDetails from "./components/ProfileDetails";
 import ProfileSettings from "./components/ProfileSettings";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -19,7 +20,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile/*" element={<Profile />} />
+          <Route
+            path="/profile/*"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
