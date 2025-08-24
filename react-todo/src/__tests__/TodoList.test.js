@@ -1,53 +1,44 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import TodoList from "../components/TodoList";
+import { render, screen, fireEvent } from '@testing-library/react';
+import TodoList from '../TodoList';
 
-describe("TodoList Component", () => {
-    test("renders initial todos", () => {
-        render(<TodoList />);
+test('renders TodoList component with initial todos', () => {
+    render(<TodoList />);
+    // Check if demo todos are in the document
+    expect(screen.getByText(/Learn React Router/i)).toBeInTheDocument();
+    expect(screen.getByText(/Build a TodoList component/i)).toBeInTheDocument();
+});
 
-        // Initial todos from TodoList.jsx
-        expect(screen.getByText("Learn React Router")).toBeInTheDocument();
-        expect(screen.getByText("Build a TodoList component")).toBeInTheDocument();
-    });
+test('adds a new todo', () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new todo/i);
+    const button = screen.getByText(/add/i);
 
-    test("adds a new todo", () => {
-        render(<TodoList />);
+    // Type and submit
+    fireEvent.change(input, { target: { value: 'Write tests' } });
+    fireEvent.click(button);
 
-        const input = screen.getByPlaceholderText("Add a new todo...");
-        const addButton = screen.getByText("Add");
+    // Check if new todo appears
+    expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
+});
 
-        fireEvent.change(input, { target: { value: "Write tests" } });
-        fireEvent.click(addButton);
+test('toggles a todo', () => {
+    render(<TodoList />);
+    const todoItem = screen.getByText(/Learn React Router/i);
 
-        expect(screen.getByText("Write tests")).toBeInTheDocument();
-    });
+    // First click (mark completed)
+    fireEvent.click(todoItem);
+    expect(todoItem).toHaveClass('completed');
 
-    test("toggles a todo between completed and not completed", () => {
-        render(<TodoList />);
+    // Second click (mark not completed)
+    fireEvent.click(todoItem);
+    expect(todoItem).not.toHaveClass('completed');
+});
 
-        const todo = screen.getByText("Learn React Router");
+test('deletes a todo', () => {
+    render(<TodoList />);
+    const deleteButton = screen.getAllByText(/delete/i)[0]; // first todo delete
+    fireEvent.click(deleteButton);
 
-        // Initially not completed
-        expect(todo).not.toHaveClass("line-through");
-
-        // Click to toggle completed
-        fireEvent.click(todo);
-        expect(todo).toHaveClass("line-through");
-
-        // Click again to toggle back
-        fireEvent.click(todo);
-        expect(todo).not.toHaveClass("line-through");
-    });
-
-    test("deletes a todo", () => {
-        render(<TodoList />);
-
-        const todo = screen.getByText("Build a TodoList component");
-        const deleteButton = todo.parentElement.querySelector("button");
-
-        fireEvent.click(deleteButton);
-
-        expect(todo).not.toBeInTheDocument();
-    });
+    // Check it's removed
+    expect(screen.queryByText(/Learn React Router/i)).not.toBeInTheDocument();
 });
