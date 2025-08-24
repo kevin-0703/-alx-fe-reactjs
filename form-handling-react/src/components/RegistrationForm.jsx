@@ -8,8 +8,14 @@ function RegistrationForm() {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    if (!username || !email || !password) {
-      setError("All fields are required");
+    if (!username) {
+      setError("Username is required");
+      return;
+    } else if (!email) {
+      setError("Email is required");
+      return;
+    } else if (!password) {
+      setError("Password is required");
       return;
     }
     setError("");
