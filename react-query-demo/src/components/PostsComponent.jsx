@@ -5,9 +5,13 @@ const fetchData = async () => {
   return res.json();
 };
 const PostsComponent = () => {
-  const { fetchPosts, isError, isLoading } = useQuery("fetchPosts", fetchPosts);
+  const { fetchPosts, isError, isLoading, error } = useQuery(
+    "fetchPosts",
+    fetchPosts
+  );
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data</div>;
+  if (error) return <div>Error: {error.message}</div>;
   return (
     <>
       <div>
