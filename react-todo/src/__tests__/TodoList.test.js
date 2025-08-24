@@ -6,7 +6,7 @@ describe("TodoList Component", () => {
     test("renders initial todos", () => {
         render(<TodoList />);
 
-        // Initial todos from the component
+        // Initial todos from TodoList.jsx
         expect(screen.getByText("Learn React Router")).toBeInTheDocument();
         expect(screen.getByText("Build a TodoList component")).toBeInTheDocument();
     });
@@ -23,7 +23,7 @@ describe("TodoList Component", () => {
         expect(screen.getByText("Write tests")).toBeInTheDocument();
     });
 
-    test("toggles a todo as completed", () => {
+    test("toggles a todo between completed and not completed", () => {
         render(<TodoList />);
 
         const todo = screen.getByText("Learn React Router");
@@ -31,11 +31,13 @@ describe("TodoList Component", () => {
         // Initially not completed
         expect(todo).not.toHaveClass("line-through");
 
-        // Click to toggle
+        // Click to toggle completed
         fireEvent.click(todo);
-
-        // Now should be completed
         expect(todo).toHaveClass("line-through");
+
+        // Click again to toggle back
+        fireEvent.click(todo);
+        expect(todo).not.toHaveClass("line-through");
     });
 
     test("deletes a todo", () => {
