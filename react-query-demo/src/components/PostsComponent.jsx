@@ -4,7 +4,7 @@ const fetchData = async () => {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   return res.json();
 };
-const ReactQueryComponent = () => {
+const PostsComponent = () => {
   const { data, error, isLoading } = useQuery("fetchData", fetchData);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
@@ -25,4 +25,4 @@ const ReactQueryComponent = () => {
     </>
   );
 };
-export default ReactQueryComponent;
+export default PostsComponent;
