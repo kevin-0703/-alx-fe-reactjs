@@ -11,7 +11,7 @@ function PostsComponent() {
         cacheTime: 1000 * 60 * 5,
         staleTime: 1000 * 60,
         refetchOnWindowFocus: false,
-    KeepPreviousData: true,
+        keepPreviousData: true,
   });
  }
     if (error) return <div>Error: {error.message}</div>;
